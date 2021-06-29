@@ -67,12 +67,12 @@ PROGRAM_OPTIONS=(
   "streamio" "⚠️ Freedom To Watch Everything You Want. - https://www.stremio.com/downloads" off
 )
 
-function _moshell::log() {
+function _btm::log() {
   echo -e "$*"
 }
 
-function _moshell::usage() {
-  _moshell::log """
+function _btm::usage() {
+  _btm::log """
     usage: $0 [-v] [--snap]
 
   -j | --jump \t\t\t Skip the requirements (update and installation of tools). Good for development.o.
@@ -83,28 +83,28 @@ function _moshell::usage() {
   exit
 }
 
-function _moshell::check_command_existance_or_install() {
+function _btm::check_command_existance_or_install() {
   if [ $(command -v $1) ]; then
-    $IS_VERBOSE && _moshell::log "\t ✅ $1."
+    $IS_VERBOSE && _btm::log "\t ✅ $1."
     return 0
   else
-    $IS_VERBOSE && _moshell::log "❌ \"$1\" command does not exist, trying to install it."
+    $IS_VERBOSE && _btm::log "❌ \"$1\" command does not exist, trying to install it."
     sudo apt-get install -y $1
   fi
 }
 
-function _moshell::show_progress_bar() {
+function _btm::show_progress_bar() {
   dialog --gauge "Please wait while installing" 6 70
 }
 
-function _moshell::if_verbose_print_to_clear() {
+function _btm::if_verbose_print_to_clear() {
   $IS_VERBOSE &&
     echo &&
-    _moshell::press_enter &&
+    _btm::press_enter &&
     clear
 }
 
-function _moshell::update_os() {
+function _btm::update_os() {
   if [ $IS_VERBOSE = true ]; then
     sudo apt-get update -y
   else
@@ -112,29 +112,29 @@ function _moshell::update_os() {
   fi
 }
 
-function _moshell::install_requirements() {
+function _btm::install_requirements() {
   if [ $JUMP_REQUIREMENTS = true ]; then
     return 0
   fi
 
-  _moshell::update_os
+  _btm::update_os
   if [ $IS_TO_USE_SNAPCRAFT_STORE = true ]; then
     if [ !$(command -v snap) ]; then
-      _moshell::log "🔗 Check https://snapcraft.io/docs/installing-snapd to install."
-      _moshell::press_enter
+      _btm::log "🔗 Check https://snapcraft.io/docs/installing-snapd to install."
+      _btm::press_enter
       exit
     fi
 
   fi
 
-  $IS_VERBOSE && _moshell::log "\n🏗️  Installing requirements ...\n"
+  $IS_VERBOSE && _btm::log "\n🏗️  Installing requirements ...\n"
 
   for item in "${REQUIREMENTS_TO_INSTALL[@]}"; do
-    _moshell::check_command_existance_or_install "${item}"
+    _btm::check_command_existance_or_install "${item}"
   done
 
   if [ $IS_VERBOSE = true ]; then
-    _moshell::if_verbose_print_to_clear
+    _btm::if_verbose_print_to_clear
   else
     sleep 1
   fi
@@ -142,21 +142,21 @@ function _moshell::install_requirements() {
   return 0
 }
 
-function _moshell::press_enter() {
+function _btm::press_enter() {
   read -p " < press ENTER to continue > " FAKEINPUT
   return 0
 }
 
-function _moshell::sudo_agreement_or_exit() {
+function _btm::sudo_agreement_or_exit() {
   if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-    _moshell::log "🚫 It's necessary running as root. Try again (sudo !!)."
+    _btm::log "🚫 It's necessary running as root. Try again (sudo !!)."
     exit
   else
     return 0
   fi
 }
 
-function _moshell::select_programs() {
+function _btm::select_programs() {
   local selected=$(dialog \
     --stdout \
     --clear \
@@ -165,13 +165,13 @@ function _moshell::select_programs() {
     0 0 0 \
     "${PROGRAM_OPTIONS[@]}")
 
-  _moshell::log $selected
+  _btm::log $selected
 }
 
-function _moshell::banner() {
+function _btm::banner() {
   clear # first clear
-  _moshell::sudo_agreement_or_exit
-  _moshell::install_requirements
+  _btm::sudo_agreement_or_exit
+  _btm::install_requirements
 
   figlet $BANNER_MSG
   sleep 1
@@ -181,7 +181,7 @@ function _moshell::banner() {
 # The function receives a key that has a preconfigured option to install it.
 # If you want to add some program, just remember to add to $PROGRAM_OPTIONS list.
 ##
-function _moshell::install() {
+function _btm::install() {
   local item_to_install="$1"
   case "$item_to_install" in
 
@@ -191,7 +191,7 @@ function _moshell::install() {
     else
       sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
       echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-      _moshell::update_os
+      _btm::update_os
       sudo apt install brave-browser
     fi
     ;;
@@ -226,7 +226,7 @@ function _moshell::install() {
     echo \
       "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-    _moshell::update_os &&
+    _btm::update_os &&
       sudo apt-get install docker-ce docker-ce-cli containerd.io -y
     sudo groupadd docker
     sudo usermod -aG docker $USER
@@ -269,9 +269,9 @@ function _moshell::install() {
   streamio)
     wget https://dl.strem.io/shell-linux/v4.4.137/stremio_4.4.137-1_amd64.deb ./
 
-    _moshell::log "⚠️ This package can cause conflicts that will need to be resolved via the command line."
-    _moshell::log "If you accept, ignore this warning. Otherwise, it's your last chance to Ctrl+C."
-    _moshell::press_enter
+    _btm::log "⚠️ This package can cause conflicts that will need to be resolved via the command line."
+    _btm::log "If you accept, ignore this warning. Otherwise, it's your last chance to Ctrl+C."
+    _btm::press_enter
 
     sudo dpkg -i stremio_4.4.137-1_amd64.deb
     ;;
@@ -323,8 +323,8 @@ function _moshell::install() {
   esac
 }
 
-function _moshell::display_recommendations() {
-  _moshell::log """\r
+function _btm::display_recommendations() {
+  _btm::log """\r
 
 🧠 Some ideas to what do now: smile! :D
 
@@ -334,20 +334,20 @@ function _moshell::display_recommendations() {
 }
 
 function _moshel::installation() {
-  _moshell::banner
+  _btm::banner
 
-  local array_to_install=$(_moshell::select_programs)
+  local array_to_install=$(_btm::select_programs)
 
   for item in ${array_to_install[@]}; do
-    _moshell::install $item # ← put the command whos exit code you want to check here &>/dev/null
+    _btm::install $item # ← put the command whos exit code you want to check here &>/dev/null
     if [ $? -eq 0 ]; then
-      _moshell::log "✅ $item"
+      _btm::log "✅ $item"
     else
-      _moshell::log "❌ $item"
+      _btm::log "❌ $item"
     fi
   done
 
-  _moshell::display_recommendations
+  _btm::display_recommendations
 }
 
 POSITIONAL_ARGS=() # Processes the arguments before invoking the installation.
@@ -358,7 +358,7 @@ while [[ $# > 0 ]]; do
     shift
     ;;
 
-  -h | --help) _moshell::usage ;;
+  -h | --help) _btm::usage ;;
 
   -s | --snap)
     IS_TO_USE_SNAPCRAFT_STORE=true
@@ -370,7 +370,7 @@ while [[ $# > 0 ]]; do
     shift
     ;;
   # -s | --switch)
-  #   _moshell::log "switch: ${1} with value: ${2}"
+  #   _btm::log "switch: ${1} with value: ${2}"
   #   shift 2 # shift twice to bypass switch and its value
   #   ;;
   *) # unknown flag/switch
