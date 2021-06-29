@@ -333,7 +333,7 @@ function _btm::display_recommendations() {
 """
 }
 
-function _moshel::installation() {
+function _btm::installation() {
   _btm::banner
 
   local array_to_install=$(_btm::select_programs)
@@ -380,4 +380,4 @@ while [[ $# > 0 ]]; do
   esac
 done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional_ARGS params / process flags
-_moshel::installation          # Start installation
+_btm::installation          # Start installation
