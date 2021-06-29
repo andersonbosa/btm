@@ -4,18 +4,15 @@
 > I was tired of always installing the same things.
 
 
-### 🫂 Contribute
+#### 🫂 Contribute
 
-- Guideline `¯\_(ツ)_/¯`
 - The idea is to be a script that can install [preconfigured][toolsList] tools for [any system][testedIn].
 
   
-  
-### 🍴 Fork and start your own!
+#### 🍴 Fork and start your own!
 
 
-
-### 📑 Tested in:
+#### 📑 Tested in:
 
 ```
 ✅ Ubuntu 20.04.2 LTS focal
