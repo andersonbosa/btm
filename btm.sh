@@ -24,6 +24,7 @@ PROGRAM_OPTIONS=(
   "tmux" "Terminal multiplexer" off
   "ohmyzsh" "zsh + Oh My Zsh" on
   "nvm" "Node Version Manager - https://github.com/nvm-sh/nvm" on
+  "gh" "Github CLI - https://cli.github.com/manual/" on
 
   # Comunication
   "discord" "Chat for Communities and Friends" on
@@ -240,14 +241,21 @@ function _btm::install() {
 
   gimp) sudo apt install -y gimp ;;
 
+  gh) # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+    sudo apt update
+    sudo apt install -y gh
+    ;;
+
+  httpie) sudo apt install -y httpie ;;
+
   htop) sudo apt install -y htop ;;
 
   insomnia)
     sudo snap install insomnia
     sudo snap install insomnia-designer
     ;;
-
-  httpie) sudo apt install -y httpie ;;
 
   keepassxc)
     if [ $IS_TO_USE_SNAPCRAFT_STORE = true ]; then
@@ -380,4 +388,4 @@ while [[ $# > 0 ]]; do
   esac
 done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional_ARGS params / process flags
-_btm::installation          # Start installation
+_btm::installation             # Start installation
