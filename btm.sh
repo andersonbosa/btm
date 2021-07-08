@@ -19,50 +19,52 @@ REQUIREMENTS_TO_INSTALL=(
 #   "key used on install function" "whatis" on/off
 PROGRAM_OPTIONS=(
   # Terminal/Shell
-  "terminator" "Multiple GNOME terminals in one window" on
+  "terminator" "Multiple GNOME terminals in one window" off
   "konsole" "X terminal emulator" off
   "tmux" "Terminal multiplexer" off
-  "ohmyzsh" "zsh + Oh My Zsh" on
-  "nvm" "Node Version Manager - https://github.com/nvm-sh/nvm" on
+  "ohmyzsh" "zsh + Oh My Zsh" off
+  "nvm" "Node Version Manager - github.com/nvm-sh/nvm" off
+  "vundle" "Is a Vim bundle and Vim plugin manager - github.com/VundleVim/Vundle.vim" off
 
   # Comunication
-  "discord" "Chat for Communities and Friends" on
-  "slack" "Team communication for the 21st century." on
-  "telegram" "Fast and secure messaging application" on
+  "discord" "Chat for Communities and Friends" off
+  "slack" "Team communication for the 21st century." off
+  "telegram" "Fast and secure messaging application" off
   "teams" "Microsoft Teams for Linux is your chat-centered workspace in Office 365." off
 
   # Midia
-  "spotify" "Music for everyone" on
-  "vlc" "Multimedia player and streamer" on
-  "gimp" "GNU Image Manipulation Program" on
+  "spotify" "Music for everyone" off
+  "vlc" "Multimedia player and streamer" off
+  "gimp" "GNU Image Manipulation Program" off
 
   # Browsers
-  "brave" "Browse faster by blocking ads and trackers that cost you time and money." on
-  "chrome" "_" on
+  "brave" "Browse faster by blocking ads and trackers that cost you time and money." off
+  "chrome" "_" off
   "chromium" "_" off
   "opera" "_" off
 
   # IDE's
-  "code" "Code editing. Refined." on
-  "vim" "Vi IMproved - enhanced vi editor" on
-  "spacevim" "SpaceVim (w/ nvim) " off
+  "code" "Code editing. Refined." off
+  "vim" "Vi IMproved - enhanced vi editor" off
+  "spacevim" "SpaceVim (w/ vim) " off
+  "spacenvim" "SpaceVim (w/ Nvim) " off
   "sublime" "_" off
 
   # O.S.
-  "htop" "Interactive processes viewer" on
-  "netcat-traditional" "TCP/IP swiss army knife (used on backtrack)" on
-  "docker" "The open-source application container engine" on
-  "httpie" "CLI, cURL-like tool for humans" on
+  "htop" "Interactive processes viewer" off
+  "netcat-traditional" "TCP/IP swiss army knife (used off backtrack)" off
+  "docker" "The open-source application container engine" off
+  "httpie" "CLI, cURL-like tool for humans" off
 
   # I3
   "i3" "Metapackage (i3 window manager, screen locker, menu, statusbar)" off
   "nnn" "Free, fast, friendly file manager" off
 
   # Others
-  "vokoscreen" "Easy to use screencast creator" on
-  "flameshot" "Powerful yet simple-to-use screenshot software" on
-  "keepassxc" "Cross Platform Password Manager" on
-  "postman" "API Development Environment" on
+  "vokoscreen" "Easy to use screencast creator" off
+  "flameshot" "Powerful yet simple-to-use screenshot software" off
+  "keepassxc" "Cross Platform Password Manager" off
+  "postman" "API Development Environment" off
   "insomnia" "Kinda Postman Open-source" off
   "streamio" "⚠️ Freedom To Watch Everything You Want. - https://www.stremio.com/downloads" off
 )
@@ -266,6 +268,11 @@ function _btm::install() {
     curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
     ;;
 
+  spacenvim)
+    sudo apt install -y vim
+    curl -sLf https://spacevim.org/install.sh | bash -s -- --install vim
+    ;;
+
   streamio)
     wget https://dl.strem.io/shell-linux/v4.4.137/stremio_4.4.137-1_amd64.deb ./
 
@@ -318,6 +325,29 @@ function _btm::install() {
   vim) sudo apt install -y vim ;;
 
   vokoscreen) sudo apt-get install -y vokoscreen ;;
+
+  vundle)
+    # https://github.com/VundleVim/Vundle.vim#quick-start
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+    # to backup original
+    original_vimrc="$(cat ~/.vimrc || cat /usr/share/vim/vimrc)" &>/dev/null
+    backup_vimrc="~/.vimrc.$RANDOM.backup"
+
+    # backup it
+    touch $backup_vimrc
+    echo $original_vimrc >$backup_vimrc
+
+    # echo on top of file
+    touch ~/.vimrc
+    cat <<__EOF__ >~/.vimrc
+# Vundle required:
+$(curl -s "https://gist.githubusercontent.com/andersonbosa/73eba5b4699d5539f8111eb51a675a3b/raw")
+
+# Original vimrc
+echo $original_vimrc
+__EOF__
+    ;;
 
   *) $IS_VERBOSE && echo -e "❌ Option \"$item_to_install\" not recognized or does not exist." ;;
   esac
@@ -380,4 +410,4 @@ while [[ $# > 0 ]]; do
   esac
 done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional_ARGS params / process flags
-_btm::installation          # Start installation
+_btm::installation             # Start installation
