@@ -1,7 +1,13 @@
 # btm - b00t the m4chine
 
+![License](https://img.shields.io/badge/License-OPEN--SOURCE-brightgreen)
+![Repo status](https://img.shields.io/badge/repo%20status-ACTIVE-brightgreen)
+[![Contributions are welcome](https://img.shields.io/badge/contributions-WELCOME-brightgreen.svg?style=flat)](https://github.com/andersonbosa/mykro/issues)
+
 > Automatization of some installations.
 > I was tired of always installing the same things.
+
+<br />
 
 #### 🫂 Contribute
 
