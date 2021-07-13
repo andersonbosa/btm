@@ -1,37 +1,38 @@
-## Welcome to GitHub Pages
+## btm - b00t the m4chine
 
-You can use the [editor on GitHub](https://github.com/andersonbosa/btm/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+![License](https://img.shields.io/badge/License-OPEN--SOURCE-brightgreen)
+![Repo status](https://img.shields.io/badge/repo%20status-ACTIVE-brightgreen)
+[![Contributions are welcome](https://img.shields.io/badge/contributions-WELCOME-brightgreen.svg?style=flat)](https://github.com/andersonbosa/mykro/issues)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+> Automatization of some installations.
+> I was tired of always installing the same things.
 
-### Markdown
+<br />
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+#### 🫂 Contribute
 
-```markdown
-Syntax highlighted code block
+- The idea is to be a script that can install [preconfigured][toolsList] tools for [any system][testedIn].
 
-# Header 1
-## Header 2
-### Header 3
+#### 📑 Tested in:
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+✅ Ubuntu 20.04.2 LTS focal
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+#### 🍴 Fork and start your own!
 
-### Jekyll Themes
+## How to
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/andersonbosa/btm/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- Just download and run (as root) in your shell :D ~(remember, ALWAYS check the content inside a script)~.
 
-### Support or Contact
+```bash
+curl -sLf https://github.com/andersonbosa/btm/raw/master/btm.sh > btm.sh # download
+sudo bash btm.sh -v # run w/ verbose
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+# or the fastest and most insecure way:
+
+curl -sLf https://github.com/andersonbosa/btm/raw/master/btm.sh | sudo bash -s -- -v
+```
+
+[toolsList]: https://github.com/andersonbosa/btm/blob/master/btm.sh#L20
+[testedIn]: https://github.com/andersonbosa/btm#-tested-in
