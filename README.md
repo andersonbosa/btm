@@ -7,6 +7,8 @@
 > Automatization of some installations.
 > I was tired of always installing the same things.
 
+- A tool to speed up the setup of development environments through the installation of a series of tools chosen by the user.
+
 <br />
 
 #### 🫂 Contribute
