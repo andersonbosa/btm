@@ -4,10 +4,11 @@
 ![Repo status](https://img.shields.io/badge/repo%20status-ACTIVE-brightgreen)
 [![Contributions are welcome](https://img.shields.io/badge/contributions-WELCOME-brightgreen.svg?style=flat)](https://github.com/andersonbosa/mykro/issues)
 
-> Automatization of some installations.
-> I was tired of always installing the same things.
+<p id="app-description"> 
+  
+######  A tool to speed up the setup of development environments through the installation of a series of tools chosen by the user.
 
-<p id="app-description"> A tool to speed up the setup of development environments through the installation of a series of tools chosen by the user.</p>
+</p>
 
 <br />
 
