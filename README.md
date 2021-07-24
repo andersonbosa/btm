@@ -1,6 +1,6 @@
 # btm - b00t the m4chine
 
-![License](https://img.shields.io/badge/License-OPEN--SOURCE-brightgreen)
+![License](https://img.shields.io/badge/License-GPLv3-brightgreen)
 ![Repo status](https://img.shields.io/badge/repo%20status-ACTIVE-brightgreen)
 [![Contributions are welcome](https://img.shields.io/badge/contributions-WELCOME-brightgreen.svg?style=flat)](https://github.com/andersonbosa/mykro/issues)
 
